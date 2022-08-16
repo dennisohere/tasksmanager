@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->integer('priority');
-            $table->foreignIdFor(\App\Models\Project::class);
+            $table->foreignIdFor(\App\Models\Project::class)->nullable();
             $table->timestamps();
         });
     }

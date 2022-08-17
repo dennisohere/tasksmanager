@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Services\TaskService;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -12,11 +13,11 @@ class TasksController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return Response
+     * @return array|Collection
      */
-    public function index()
+    public function index(TaskService $taskService): Collection|array
     {
-        //
+        return $taskService->getTasks();
     }
 
     /**
@@ -77,9 +78,29 @@ class TasksController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, TaskService $taskService, $id)
     {
-        //
+        $payload = $this->validate($request, [
+            'id' => 'sometimes',
+            'title' => 'required',
+        ]);
+
+        $taskService->saveTask($payload);
+    }
+
+    /**
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function updatePriority(Request $request, TaskService $taskService, $id)
+    {
+        $payload = $this->validate($request, [
+            'new_priority' => 'required|integer',
+        ]);
+
+        $taskService->updateTaskPriority($id, $payload['new_priority']);
+
+        return $taskService->getTasks();
+
     }
 
     /**

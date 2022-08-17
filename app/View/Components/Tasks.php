@@ -2,26 +2,18 @@
 
 namespace App\View\Components;
 
-use App\Models\Task;
-use App\Services\TaskService;
-use Illuminate\Support\Collection;
 use Illuminate\View\Component;
 
 class Tasks extends Component
 {
-    /**
-     * @var Collection | Task[]
-     */
-    public Collection|array $tasks;
 
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct(TaskService $taskService)
+    public function __construct()
     {
-        $this->tasks = $taskService->getTasks();
     }
 
     /**

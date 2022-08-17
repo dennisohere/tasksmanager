@@ -1,6 +1,6 @@
 
 
-<div class="px-3.5 py-6" id="tasksList"
+<div class="px-3.5 mt-3 mb-6 max-h-[400px] overflow-y-auto" id="tasksList"
      x-data="tasksList"
 >
 
@@ -30,7 +30,7 @@
                 <ul class="py-1 text-sm text-gray-700 dark:text-gray-200"
                     x-bind:aria-labelledby="'dropdown-toggle-' + task.id">
                     <li>
-                        <a href="#" class="block py-2 px-4 hover:bg-gray-200 dark:hover:text-white">
+                        <a :href="'/tasks/' + task.id + '/edit'" class="block py-2 px-4 hover:bg-gray-200 dark:hover:text-white">
                             Edit
                         </a>
                     </li>
@@ -41,8 +41,6 @@
                     </li>
                 </ul>
             </div>
-
-
         </div>
     </template>
 

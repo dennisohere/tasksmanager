@@ -23,11 +23,11 @@ class TasksController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function create()
+    public function create(): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application
     {
-        //
+        return view('pages.tasks.edit');
     }
 
     /**
@@ -42,11 +42,12 @@ class TasksController extends Controller
         $payload = $this->validate($request, [
             'id' => 'sometimes',
             'title' => 'required',
+            'project' => 'nullable|string',
         ]);
 
         $taskService->saveTask($payload);
 
-        return redirect()->back();
+        return redirect()->route('home');
     }
 
     /**
@@ -64,11 +65,13 @@ class TasksController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function edit($id)
+    public function edit(TaskService $taskService, $id)
     {
-        //
+        $task = $taskService->getTaskById($id);
+
+        return view('pages.tasks.edit', compact('task'));
     }
 
     /**

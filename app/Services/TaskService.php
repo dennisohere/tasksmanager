@@ -2,12 +2,21 @@
 
 namespace App\Services;
 
+use App\Models\Project;
 use App\Models\Task;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class TaskService
 {
+    public function getTaskById($id): Task
+    {
+        /** @var Task $task */
+        $task = Task::query()->with('project')->find($id);
+
+        return $task;
+    }
 
     public function saveTask($payload): Task
     {
@@ -17,10 +26,28 @@ class TaskService
         $task = $should_update  ? Task::query()->find($payload['id']) : new Task();
 
         $task->name = $payload['title'];
-        $task->setTaskPriority($payload['priority'] ?? null, $payload['project_id'] ?? null);
+        if(!$should_update){
+            $task->setTaskPriority($payload['priority'] ?? null, $payload['project_id'] ?? null);
+        }
+        $task->project_id = $this->getProjectId($payload['project'] ?? null);
         $task->save();
 
         return $task;
+    }
+
+    private function getProjectId($project_name = null): ?int
+    {
+        if(!$project_name) return null;
+
+        $title = Str::title($project_name);
+
+        /** @var Project $project */
+        $project = Project::query()->where('title', $title)
+            ->firstOrCreate([
+                'title' => $title
+            ]);
+
+        return $project->id;
     }
 
     public function getTasks(): Collection|array

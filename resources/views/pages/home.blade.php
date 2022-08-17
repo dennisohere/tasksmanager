@@ -1,36 +1,30 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{config('app.name')}}</title>
-{{--    <link rel="stylesheet" href="/css/tailwind.css">--}}
-    <script src="https://unpkg.com/phosphor-icons"></script>
-    @vite('./resources/css/tailwind.css')
-    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
-</head>
-<body>
+@extends('layouts.base')
 
-<div class="bg-gray-100 min-h-screen flex flex-col items-center justify-center">
-    <div class="w-full sm:w-1/2 mx-auto">
-        <h1 class="text-3xl text-teal-600 text-center">Tasks Manager</h1>
+@section('app')
+    <div class="bg-gray-100 min-h-screen flex flex-col items-center justify-center py-3">
+        <div class="w-full sm:w-1/2 mx-auto">
 
-        <div class="mx-4 mx-auto">
-            <x-taskform />
+            <div class="flex place-items-center space-x-2 mx-4 mx-auto mb-6 pb-6 border-b border-teal-600">
+                <h1 class="text-3xl text-teal-600 grow">Tasks Manager</h1>
+
+                <div class="flex space-x-2">
+                    <a href="{{route('tasks.create')}}"
+                       class="text-white bg-teal-700 hover:bg-teal-800 font-medium rounded-lg
+                        text-lg px-4 py-2.5 text-center inline-flex items-center"
+                    >
+                        <i class="ph-plus"></i>
+                    </a>
+                    <button
+                        class="text-white bg-teal-700 hover:bg-teal-800 font-medium rounded-lg
+                        text-lg px-4 py-2.5 text-center inline-flex items-center"
+                    >
+                        <i class="ph-funnel"></i>
+                    </button>
+                </div>
+            </div>
+
+            <x-tasks />
+
         </div>
-
-        <x-tasks />
     </div>
-</div>
-
-<script src="https://unpkg.com/flowbite@1.5.2/dist/flowbite.js"></script>
-@vite('./resources/js/app.js')
-
-
-@stack('scripts')
-
-</body>
-</html>
+@endsection

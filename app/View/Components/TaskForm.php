@@ -2,18 +2,23 @@
 
 namespace App\View\Components;
 
+use App\Models\Project;
+use App\Models\Task;
 use Illuminate\View\Component;
 
 class TaskForm extends Component
 {
+    public ?Task $task;
+
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(Task $task = null)
     {
         //
+        $this->task = $task;
     }
 
     /**

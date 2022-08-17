@@ -8,18 +8,19 @@
                 <h1 class="text-3xl text-teal-600 grow">Tasks Manager</h1>
 
                 <div class="flex space-x-2">
-                    <a href="{{route('tasks.create')}}"
-                       class="text-white bg-teal-700 hover:bg-teal-800 font-medium rounded-lg
-                        text-lg px-4 py-2.5 text-center inline-flex items-center"
-                    >
-                        <i class="ph-plus"></i>
-                    </a>
                     <button
-                        class="text-white bg-teal-700 hover:bg-teal-800 font-medium rounded-lg
+                        class="text-teal-700 hover:text-white bg-gray-200 hover:bg-teal-800 font-medium rounded-lg
                         text-lg px-4 py-2.5 text-center inline-flex items-center"
                     >
                         <i class="ph-funnel"></i>
                     </button>
+
+                    <a href="{{route('tasks.create')}}"
+                       class="text-white bg-teal-500 hover:bg-teal-800 font-medium rounded-lg
+                        text-lg px-4 py-2.5 text-center inline-flex items-center"
+                    >
+                        <i class="ph-plus"></i>
+                    </a>
                 </div>
             </div>
 

@@ -53,7 +53,8 @@ class TaskService
     public function getTasks(): Collection|array
     {
         return Task::query()
-            ->orderBy('priority', 'asc')
+            ->orderBy('priority')
+            ->with('project')
             ->get();
     }
 

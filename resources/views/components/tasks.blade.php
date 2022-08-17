@@ -12,6 +12,12 @@
             </span>
             <div class="grow">
                 <span x-text="task.name"></span>
+                <template x-if="task.project">
+                    <div class="text-xs">
+                        <span>Project:</span>
+                        <span class="font-bold" x-text="task.project.title"></span>
+                    </div>
+                </template>
             </div>
 
             <button x-bind:id="'dropdown-toggle-' + task.id"
@@ -34,10 +40,16 @@
                             Edit
                         </a>
                     </li>
+
                     <li>
-                        <a href="#" class="block py-2 px-4 hover:bg-red-700 hover:text-white">
-                            Delete
-                        </a>
+                        <form :action="'/tasks/' + task.id" method="post" class="block">
+                            @csrf
+                            @method('delete')
+                            <button type="submit"
+                                    class="block w-full text-left py-2 px-4 hover:bg-red-700 hover:text-white">
+                                Delete
+                            </button>
+                        </form>
                     </li>
                 </ul>
             </div>

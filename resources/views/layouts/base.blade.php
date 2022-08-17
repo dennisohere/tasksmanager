@@ -9,7 +9,10 @@
     <title>{{config('app.name')}}</title>
     {{--    <link rel="stylesheet" href="/css/tailwind.css">--}}
     <script src="https://unpkg.com/phosphor-icons"></script>
-    @vite('./resources/css/tailwind.css')
+
+    @vite('resources/js/app.js')
+
+
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
 </head>
 <body>
@@ -17,7 +20,6 @@
 @yield('app')
 
 <script src="https://unpkg.com/flowbite@1.5.2/dist/flowbite.js"></script>
-@vite('./resources/js/app.js')
 
 
 @stack('scripts')

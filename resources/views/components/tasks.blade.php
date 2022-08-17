@@ -2,6 +2,7 @@
 
 <div class="px-3.5 mt-3 mb-6 max-h-[400px] overflow-y-auto" id="tasksList"
      x-data="tasksList"
+     @filter-project.window="filterProject($event.detail)"
 >
 
     <template x-for="task in tasks">
@@ -64,8 +65,30 @@
             Alpine.data('tasksList', () => ({
                 tasks: [],
 
+                async filterProject(project){
+                    if(project){
+                        await this.loadTasks(project.id);
+                    } else {
+                        await this.loadTasks();
+                    }
+                },
+
+                async loadTasks(project_id){
+                    const tasks = (await window.axios.get('/tasks', {
+                        params: {
+                            'project_id': project_id
+                        }
+                    })).data;
+
+                    this.tasks = [];
+
+                    this.$nextTick(() => { this.tasks = tasks; });
+
+
+                },
+
                 async init(){
-                   this.tasks = await (await fetch('{{route('tasks.index')}}')).json();
+                   await this.loadTasks();
                    const vm = this;
                    new window.Sortable(tasksList, {
                         animation: 150,
@@ -76,9 +99,8 @@
 
                             const resData = await window.axios.post('/tasks/' + task.id + '/update/priority', {
                                 'new_priority': evt.newIndex + 1
-                            },)
+                            },);
 
-                            console.log('res', resData.data);
                             vm.tasks = [];
 
                             vm.$nextTick(() => { vm.tasks = resData.data; });

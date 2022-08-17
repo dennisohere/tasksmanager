@@ -52,10 +52,15 @@ class TaskService
 
     public function getTasks(): Collection|array
     {
-        return Task::query()
+        $query = Task::query()
             ->orderBy('priority')
-            ->with('project')
-            ->get();
+            ->with('project');
+
+        if($project_id = request('project_id')){
+            $query = $query->where('project_id', $project_id);
+        }
+
+        return $query->get();
     }
 
     public function updateTaskPriority($id, $new_priority): Task
